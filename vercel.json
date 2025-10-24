@@ -9,7 +9,7 @@
   "routes": [
     {
       "src": "/(.*)",
-      "dest": "/nodejs-todo-app/app.js"
+      "dest": "nodejs-todo-app/app.js"
     }
   ]
 }
