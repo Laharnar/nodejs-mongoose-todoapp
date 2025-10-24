@@ -8,27 +8,6 @@ const app = express()
 
 app.use(express.json());
 mongoose = require("mongoose");
-main().catch(err => console.log(err));
-
-async function main() {
-    //await mongoose.connect('mongodb://127.0.0.1:27017/test');
-    url = 'mongodb+srv://demo:root@cluster0.up1yn7o.mongodb.net/todo?retryWrites=true&w=majority&appName=Cluster0'
-    await mongoose.connect(url, {
-        useNewUrlParser: true,
-        useUnifiedTopology: true,
-        // Add a timeout to force a fast fail if there's no response
-        serverSelectionTimeoutMS: 5000
-    });
-    console.log("🚀 Connected to mongodb!")
-
-    const PORT = process.env.PORT || 3000;
-
-app.listen(PORT, () => {
-    // This log confirms which port the server is running on
-    console.log(`Server is running on port ${PORT}`); 
-});
-
-}
 
 
 app.use(express.static(path.join(__dirname, 'public')));
@@ -51,7 +30,7 @@ app.patch('/api/todos/:id/isDone', async (req, res) => {
         req.params.id,
         {isDone:isDone},
         {new : true}
-        )
+    )
     if (!todo) {
         return res.status(404).json({ message: 'Todo item not found.' });
     }
@@ -97,3 +76,23 @@ app.get('/test', (req, res) => {
 })
 
 
+main().catch(err => console.log(err));
+
+async function main() {
+    //await mongoose.connect('mongodb://127.0.0.1:27017/test');
+    url = 'mongodb+srv://demo:root@cluster0.up1yn7o.mongodb.net/todo?retryWrites=true&w=majority&appName=Cluster0'
+    await mongoose.connect(url, {
+        serverSelectionTimeoutMS: 5000
+    });
+    console.log("🚀 Connected to mongodb!")
+
+    const PORT = process.env.PORT || 3000;
+
+/*app.listen(PORT, () => {
+    // This log confirms which port the server is running on
+    console.log(`Server is running on port ${PORT}`);
+});*/
+
+}
+
+module.exports = app;
