@@ -2,6 +2,7 @@ const express = require("express")
 const {response} = require("express");
 const Todo = require("./models/todoList")
 
+const path = require('path');
 const app = express()
 const port = 3000
 
@@ -26,7 +27,8 @@ async function main() {
 
 }
 
-app.use(express.static('public'))
+
+app.use(express.static(path.join(__dirname, 'public')));
 
 app.get('/', (req, res) => {
     res.send('Hello World!')
