@@ -75,15 +75,27 @@ app.get('/test', (req, res) => {
     res.send('Hello World 2!')
 })
 
-
+url = 'mongodb+srv://demo:root@cluster0.up1yn7o.mongodb.net/todo?retryWrites=true&w=majority&appName=Cluster0'
+mongoose.connect(url, {
+    serverSelectionTimeoutMS: 5000
+});
+if (require.main === module) {
+    mongoose.connection.once("open", () => {
+        const PORT = process.env.PORT || 3000;
+        app.listen(PORT, () => {
+            // This log confirms which port the server is running on
+            console.log(`Server is running on port ${PORT}`);
+        });
+    })
+}
 main().catch(err => console.log(err));
 
 async function main() {
     //await mongoose.connect('mongodb://127.0.0.1:27017/test');
-    url = 'mongodb+srv://demo:root@cluster0.up1yn7o.mongodb.net/todo?retryWrites=true&w=majority&appName=Cluster0'
+    /*url = 'mongodb+srv://demo:root@cluster0.up1yn7o.mongodb.net/todo?retryWrites=true&w=majority&appName=Cluster0'
     await mongoose.connect(url, {
         serverSelectionTimeoutMS: 5000
-    });
+    });*/
     console.log("🚀 Connected to mongodb!")
 
     const PORT = process.env.PORT || 3000;
