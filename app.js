@@ -74,6 +74,15 @@ app.post('/api/todos', async (req, res) =>{
 app.get('/test', (req, res) => {
     res.send('Hello World 2!')
 })
+app.get("/api/test-db", async (req, res) => {
+    try {
+        const result = await mongoose.connection.db.admin().ping();
+        res.json({ connected: true, result });
+    } catch (err) {
+        console.error("❌ DB test failed:", err.message);
+        res.status(500).json({ connected: false, error: err.message });
+    }
+});
 
 url = 'mongodb+srv://demo:root@cluster0.up1yn7o.mongodb.net/todo?retryWrites=true&w=majority&appName=Cluster0'
 mongoose.connect(url, {
