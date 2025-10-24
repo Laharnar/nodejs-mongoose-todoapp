@@ -4,7 +4,7 @@ const Todo = require("./models/todoList")
 
 const path = require('path');
 const app = express()
-const port = 3000
+
 
 app.use(express.json());
 mongoose = require("mongoose");
@@ -21,9 +21,12 @@ async function main() {
     });
     console.log("🚀 Connected to mongodb!")
 
-    app.listen(port, () => {
-        console.log(`🚀 Server running on port ${port}`);
-    });
+    const PORT = process.env.PORT || 3000;
+
+app.listen(PORT, () => {
+    // This log confirms which port the server is running on
+    console.log(`Server is running on port ${PORT}`); 
+});
 
 }
 
