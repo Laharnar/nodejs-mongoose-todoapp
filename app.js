@@ -80,13 +80,18 @@ mongoose.connect(url, {
     serverSelectionTimeoutMS: 5000
 });
 if (require.main === module) {
+    console.log("local run")
     mongoose.connection.once("open", () => {
+        console.log("🚀 Connected to mongodb!")
         const PORT = process.env.PORT || 3000;
         app.listen(PORT, () => {
             // This log confirms which port the server is running on
             console.log(`Server is running on port ${PORT}`);
         });
     })
+}else{
+    console.log("exporting run")
+    module.exports = app;
 }
 main().catch(err => console.log(err));
 
@@ -107,4 +112,3 @@ async function main() {
 
 }
 
-module.exports = app;
